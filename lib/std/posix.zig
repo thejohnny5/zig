@@ -1168,6 +1168,7 @@ pub const WriteError = error{
     NoSpaceLeft,
     DeviceBusy,
     InvalidArgument,
+    PermissionDenied,
 
     /// In WASI, this error may occur when the file descriptor does
     /// not hold the required rights to write to it.
@@ -1269,6 +1270,7 @@ pub fn write(fd: fd_t, bytes: []const u8) WriteError!usize {
             .FBIG => return error.FileTooBig,
             .IO => return error.InputOutput,
             .NOSPC => return error.NoSpaceLeft,
+            .ACCES => return error.PermissionDenied,
             .PERM => return error.AccessDenied,
             .PIPE => return error.BrokenPipe,
             .CONNRESET => return error.ConnectionResetByPeer,
